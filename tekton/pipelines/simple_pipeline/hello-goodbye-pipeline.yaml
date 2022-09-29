@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: hello-goodbye
+  namespace: tekton-tasks
+spec:
+  tasks:
+    - name: hello
+      taskRef:
+        name: helloworld-task
+    - name: goodbye
+      runAfter:
+        - hello
+      taskRef:
+        name: goodbyeworld-task
