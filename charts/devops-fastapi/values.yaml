@@ -37,17 +37,25 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 8080
 
 ingress:
-  enabled: false
-  annotations: {}
+  enabled: true
+  className: nginx
+  annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
-      paths: []
+    - host: fastapi.local
+      http:
+      paths:
+        - pathType: ImplementationSpecific
+          backend:
+            service:
+              name: devops-fastapi 
+              port:
+                number: 8080
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
