@@ -1,0 +1,11 @@
+cat > helm-vault-raft-values.yml <<EOF
+server:
+  dev:
+    enabled: true
+  affinity: ""
+  ha:
+    enabled: true
+    raft: 
+      enabled: true
+EOF
+
