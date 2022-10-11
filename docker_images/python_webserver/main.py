@@ -18,9 +18,9 @@ def hello():
 
 def echo():
 
-        sys.stdout.write('there was a request at ' + format(datetime.datetime.now()) + '\n')
+        sys.stderr.write('there was a request at ' + format(datetime.datetime.now()))
 
-        return 'Passed message is {0}'.format(request.args.get('m'))
+        return 'there was a request at ' + format(datetime.datetime.now())
 
 if __name__ == '__main__':
 

@@ -10,3 +10,30 @@ spec:
     count: 1
     config:
       node.store.allow_mmap: false
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: elasticsearch-ingress
+  namespace: kube-system
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/secure-backend: "true"
+spec:
+  tls:
+  - hosts:
+    - elasticsearch.local  
+  ingressClassName: nginx
+  rules:
+    - host: elasticsearch.local
+      http:
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: quickstart-es-http 
+              port:
+                number: 9200
