@@ -1,11 +1,11 @@
-# Default values for devops-fastapi.
+# Default values for pythonweb.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: fbozakov/devops-fastapi
+  repository: fbozakov/pythonweb
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 3001
 
 ingress:
   enabled: true
@@ -47,15 +47,16 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: fastapi1.local
+    - host: pythonweb1.local
       http:
       paths:
         - pathType: ImplementationSpecific
           backend:
             service:
-              name: devops-fastapi 
+              name: pythonweb
               port:
-                number: 8080
+                number: 3001
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

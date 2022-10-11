@@ -1,6 +1,30 @@
 helm install vault hashicorp/vault --set "ui.enabled=true"
 
-[vagrant@control-plane vault]$ kubectl exec -ti vault-0 -- vault operator init
+kubectl exec -ti vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -pgp-keys="keybase:hashicorp,keybase:jefferai,keybase:sethvargo"
+
+[vagrant@control-plane vault]$ kubectl -n application exec -ti vault-0 -- vault operator init -key-shares=1 -key-threshold=1
+Unseal Key 1: XyGMipZkysTf4tgKoJTRXLaV8y1sp7sSc3/J/LVcpu0=
+
+Initial Root Token: hvs.SqAhzHG0IjM0AvDdUSmbaWQb
+
+Vault initialized with 1 key shares and a key threshold of 1. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 1 of these keys to unseal it
+before it can start servicing requests.
+
+Vault does not store the generated root key. Without at least 1 keys to
+reconstruct the root key, Vault will remain permanently sealed!
+
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See "vault operator rekey" for more information.
+
+
+kubectl exec vault-0 -- vault operator unseal $VAULT_UNSEAL_KEY
+
+
+
+
+vagrant@control-plane vault]$ kubectl exec -ti vault-0 -- vault operator init
 Unseal Key 1: oWNKIPzVOzWWZLlFi+zJZIX7j2xLGpmAe60VtQASBhrH
 Unseal Key 2: sSPGoHot14Yhv/EvGjseDAbqIgxIHYIBnmUSPlOx8cSh
 Unseal Key 3: RS5PxGLsWuYFGRXpZ6cb890QlxoFWvT1MB9e3WXCWmqm
