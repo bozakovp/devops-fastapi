@@ -1,6 +1,0 @@
-FROM alpine:latest
-WORKDIR /devops
-
-RUN apk update
-RUN apk add curl
-CMD while :; do curl -s http://devops-fastapi:8080 > /dev/stdout && echo -e "\n"; sleep 10; done
